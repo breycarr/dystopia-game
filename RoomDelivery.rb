@@ -1,7 +1,7 @@
 inventory = ["pencil","lint","penknife"]
 room = ["lamp","pen","charger"]
-
-def check
+#need to work out how to pass inventory into methods
+def check   
   if action.downcase.include? "inventory"
     puts "you are carrying"
     puts inventory
