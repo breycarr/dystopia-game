@@ -1,5 +1,50 @@
 inventory = ["pencil","lint","penknife"]
-room = ["lamp","pen","charger"] #does there need to be a distinction for items in the room array that can be picked up, and can't be picked up?
+room = ["lamp","pen","charger"]
+
+def check
+  if action.downcase.include? "inventory"
+    puts "you are carrying"
+    puts inventory
+    break
+  elsif action.downcase.include? "room"
+    puts "in the room, you can see"
+    puts room
+    break
+  else
+    puts "you'll need to tell me what you want to check!"
+    action = gets.chomp
+  end
+end
+def take
+  thing = action.split(" ").last
+  if
+    room.delete("#{thing}")
+    inventory.push("#{thing}")
+    puts "You are now carrying"
+    puts inventory
+    action = gets.chomp
+    break
+  else
+    puts "there is no #{thing} to pick up"
+    action = gets.chomp
+    break
+  end
+end
+def drop
+  thing = action.split(" ").last
+   if
+     inventory.delete("#{thing}")
+     room.push("#{thing}")
+     puts "You have dropped #{thing}, and are now only carrying:"
+     puts inventory
+     action = gets.chomp
+     break
+   else
+     puts "You're not carrying #{thing}"
+     action = gets.chomp
+     break
+   end
+end
 
 puts "You stand in the centre of a dimly lit room."
 puts "You can see several object you might be able to pick up"
@@ -16,44 +61,39 @@ loop do
     action = gets.chomp
   elsif action.downcase.include? "check"
     loop do
-      if action.downcase.include? "inventory"
-        puts "you are carrying"
-        puts inventory
-        break
-      elsif action.downcase.include? "room"
-        puts "in the room, you can see"
-        puts room
-        break
-      else
-        puts "you'll need to tell me what you want to check!"
-        action = gets.chomp
-      end
+      puts check
     end
     action = gets.chomp
   elsif action.downcase.include? "take"
-    if action.split(" ").any? {|word| word == "lamp"} = true
-      room.delete!("lamp")
-      inventory.push!("lamp")
+    thing = action.split(" ").last
+    if
+      room.delete("#{thing}")
+      inventory.push("#{thing}")
       puts "You are now carrying"
       puts inventory
+      action = gets.chomp
       break
     else
-      puts "I can't do that"
+      puts "there is no #{thing} to pick up"
+      action = gets.chomp
       break
     end
   elsif action.downcase.include? "drop"
-  elsif action.downcase.include? "ahead"
-    yield( ) #this would yield to room number two
+   thing = action.split(" ").last
+    if
+      inventory.delete("#{thing}")
+      room.push("#{thing}")
+      puts "You have dropped #{thing}, and are now only carrying:"
+      puts inventory
+      action = gets.chomp
+      break
+    else
+      puts "You're not carrying #{thing}"
+      action = gets.chomp
+      break
+    end
   else
     puts "I'm afraid I don't understand what you want, why not try again?"
     action = gets.chomp
   end
 end
-
-=begin
-Within the above needs to be a function which allows the player to pick up or put down items
-1 Take is tied to the room array
-2 Drop is tied to the inventory array
-3 The item string should be compared to the relevant array
-4 If the string can be found in the array, it should be moved (or deleted) from one array and added to another
-=end
