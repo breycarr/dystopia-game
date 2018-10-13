@@ -5,29 +5,37 @@ room = ["lamp","pen","charger"]
 
 def check (action,room,inventory)
   if action.downcase.include? "inventory"
-    puts "you are carrying"
+    if inventory.empty? == false
+    puts "You are carrying"
     puts inventory
-  elsif action.downcase.include? "room"
-    puts "in the room, you can see"
-    puts room
   else
-    puts "you'll need to tell me what you want to check!"
+    puts "Your pockets are empty."
+  end
+  elsif action.downcase.include? "room"
+    if room.empty? == false
+      puts "in the room, you can see"
+      puts room
+    else
+      puts "You have taken everything that you are able."
+    end
+  else
+    puts "You'll need to tell me what you want to check!"
   end
 end
 
 def take(thing,room,inventory)
-  if
+  if #what if the player wants to take everything?
     room.delete("#{thing}")
     inventory.push("#{thing}")
     puts "You are now carrying"
     puts inventory
   else
-    puts "there is no #{thing} to pick up"
+    puts "There is no #{thing} to pick up"
   end
 end
 
 def drop(thing,room,inventory)
-  if
+  if #what if the player wants to drop everything?
     inventory.delete("#{thing}")
     room.push("#{thing}")
     puts "You have dropped #{thing}, and are now only carrying:"
@@ -43,11 +51,12 @@ puts " "
 puts "In your inventory is:"
 puts inventory
 puts " "
-puts "what would you like to do?"
+puts "What would you like to do?"
 action = gets.chomp
+
 loop do
   if action.downcase.empty? == true
-    puts "well you're going to have to type something, or we'll never get anywhere"
+    puts "Well you're going to have to type something, or we'll never get anywhere"
   elsif action.downcase.include? "check"
     check(action,room,inventory)
   elsif action.downcase.include? "take"
